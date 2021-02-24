@@ -14,7 +14,7 @@ public:
 	int getDay() const {return day;}
 	int getMaxDay() const;		//获得当月有多少天
 	bool isLeapYear() const {
-		return year%4==0 && year%100！=0 || year%400==0; 
+		return year%4==0 && year%100!=0 || year%400==0; 
 	}
 	void show() const;			//输出当前日期
 	//计算两个日期之间差多少天

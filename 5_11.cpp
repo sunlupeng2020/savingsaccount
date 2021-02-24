@@ -3,20 +3,27 @@
 #include<iostream>
 using namespace std;	
 int main(){
+	Date date(2008,11,1);
 	//建立几个账户
-	SavingsAccount sa0(1,21325302,0.015);
-	SavingsAccount sa1(1,58320212,0.015);
-	//几笔账目
-	sa0.deposit(5,5000);		//存款，第几天，多少钱
-	sa1.deposit(25,10000);
-	sa0.deposit(45,5500);
-	sa1.withdraw(60,4000);		//取款，第多少天，多少钱
-	//开户后第90天到了银行的计息日，结算所有账户的年息
-	sa0.settle(90);
-	sa1.settle(90);
-	//输出账户信息；
-	sa0.show();  cout<<endl;
-	sa1.show();  cout<<endl;
+	SavingsAccount accounts[]={
+		SavingsAccount(date, "0375521", 0.015),
+		SavingsAccount(date, "02342342", 0.015)
+	};
+	const int n=sizeof(accounts)/sizeof(SavingsAccount);		//账户总数
+	//11月份几笔账目
+	accounts[0].deposit(Date(2008,11,5),5000,"salary");
+	accounts[1].deposit(Date(2008,11,25),10000,"sell stock 0323");
+	//12月的几笔账目
+	accounts[0].deposit(Date(2008,12,5),5500,"salary");
+	accounts[1].withdraw(Date(2008,12,20),4000,"buy a laptop");
+	//结算所有账户并输出各个账户信息
+	cout<<endl;
+	for(int i=0;i<n;i++)
+	{
+		accounts[i].settle(Date(2009,1,1));
+		accounts[i].show();
+		cout<<endl;
+	}
 	cout<<"Total:"<<SavingsAccount::getTotal()<<endl;
 	return 0;
 }
@@ -46,5 +53,22 @@ Press any key to continue
 #21325302       Balance:10527.6
 #58320212       Balance:6021.78
 Total:16549.4
+Press any key to continue
+*/
+
+/*
+版本3运行结果
+2008-11-1       #0375521is created
+2008-11-1       #02342342is created
+2008-11-5       #0375521        5000    5000    salary
+2008-11-25      #02342342       10000   10000   sell stock 0323
+2008-12-5       #0375521        5500    10500   salary
+2008-12-20      #02342342       -4000   6000    buy a laptop
+
+2009-1-1        #0375521        17.38   10517.4 interest
+0375521 Balance: 10517.4
+2009-1-1        #02342342       12.99   6012.99 interest
+02342342        Balance: 6012.99
+Total:16530.4
 Press any key to continue
 */
